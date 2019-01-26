@@ -10,6 +10,3 @@
 [submodule "debootstrap"]
 	path = debootstrap
 	url = https://salsa.debian.org/installer-team/debootstrap
-[submodule "perl5"]
-	path = perl5
-	url = https://github.com/Perl/perl5.git
