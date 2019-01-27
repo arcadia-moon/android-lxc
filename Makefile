@@ -228,7 +228,7 @@ ntbtls: dummy
 	make install
 
 ncurses: dummy
-cd ${BUILD_DIR}/ncurses/ && \
+	cd ${BUILD_DIR}/ncurses/ && \
 	export PATH=${PATH}:${NDK_DIR}/bin:${NDK_DIR}&& \
 	export DESTDIR=${BUILD_DIR}/build && \
 	export SYSROOT=${NDK_DIR}/sysroot && \
