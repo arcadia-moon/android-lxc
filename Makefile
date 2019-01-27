@@ -33,7 +33,7 @@ libcap: dummy
 	make DESTDIR=${DESTDIR}/system INCDIR=/include LIBDIR=/lib install
 
 lxc: dummy
-	cp -rf ${BUILD_DIR}/patch/lxc/* ${BUILD_DIR}lxc/ && \
+	cp -rf ${BUILD_DIR}/patch/lxc/* ${BUILD_DIR}/lxc/ && \
 	cd ${BUILD_DIR}/lxc && \
 	export PATH=${PATH}:${NDK_DIR}/bin:${NDK_DIR}&& \
 	export DESTDIR=${BUILD_DIR}/build && \
