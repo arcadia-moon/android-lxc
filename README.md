@@ -1,4 +1,4 @@
-# Android-lxc
+# Android-LXC
 
 # Building LXC
 
