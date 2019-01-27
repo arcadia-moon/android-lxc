@@ -9,7 +9,7 @@ NDK_DIR := ${BUILD_DIR}/ndk-${API}
 SYSROOT := ${NDK_DIR}/sysroot
 CFLAGS := -D__ANDROID_API__=${API} -DANDROID_PLATFORM=android-${API} -fomit-frame-pointer -DANDROID -pie -fPIE --sysroot=${SYSROOT} -I${SYSROOT}/usr/include -I${SYSROOT}/arm-linux-androideabi
 DEFAULT_CFLAGS := -fomit-frame-pointer -DANDROID -pie -fPIE -fPIC --sysroot=${SYSROOT} -I${SYSROOT}/usr/include -I${DESTDIR}/system/ -isystem ${DESTDIR}/system/include -L${DESTDIR}/system/lib
-all: setNDK setNDKToolchain libcap lxc lxc-templates perl libgpg-error libgcrypt libassuan libksba libksba npth ntbtls ncurses libiconv pinentry gnupg binutils-gdb
+all: setNDK setNDKToolchain libcap lxc lxc-templates perl libgpg-error libgcrypt libassuan libksba libksba npth ntbtls ncurses libiconv pinentry gnupg binutils-gdb openssl
 
 build: libcap lxc lxc-templates perl libgpg-error libgcrypt libassuan libksba libksba npth ntbtls ncurses libiconv pinentry gnupg binutils-gdb openssl
 
