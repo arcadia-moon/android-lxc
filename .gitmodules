@@ -25,3 +25,6 @@
 [submodule "libassuan"]
 	path = libassuan
 	url = https://dev.gnupg.org/source/libassuan.git
+[submodule "libgcrypt"]
+	path = libgcrypt
+	url = https://dev.gnupg.org/source/libgcrypt.git
