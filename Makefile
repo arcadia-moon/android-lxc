@@ -44,7 +44,7 @@ lxc: dummy
 	export CXXFLAGS="${CFLAGS}" && \
 	export BUILD_CC=gcc && \
 	${BUILD_DIR}/lxc/autogen.sh && \
-	${BUILD_DIR}/lxc/configure --host=arm-linux-androideabi --disable-api-docs --disable-lua --disable-python --disable-examples --prefix=/system --datadir=/system/usr/share --with-runtime-path=/cache/ --bindir=/system/bin --libexecdir=/system/bin --sbindir=/system/bin --libdir=/system/lib  --localstatedir=/data/lxc --with-config-path=/data/lxc/containers/ --with-systemdsystemunitdir="/system/lib/systemd" && \
+	${BUILD_DIR}/lxc/configure --host=arm-linux-androideabi --disable-api-docs --disable-lua --disable-python --disable-examples --prefix=/system --datadir=/system/usr/share --with-runtime-path=/cache/ --bindir=/system/bin --libexecdir=/system/libexec --sbindir=/system/bin --libdir=/system/lib  --localstatedir=/data/lxc --with-config-path=/data/lxc/containers/ --with-systemdsystemunitdir="/system/lib systemd" && \
 	make && \
 	make install
 
@@ -108,7 +108,7 @@ libgpg-error: dummy
 	export LDFLAGS="--sysroot=${SYSROOT} -fPIE -pie" && \
 	export BUILD_CC=gcc && \
 	${BUILD_DIR}/libgpg-error/autogen.sh && \
-	${BUILD_DIR}/libgpg-error/configure --host arm-linux-androideabi --bindir=/system/bin/ --includedir=/system/include/ --libdir=/system/lib/ --datarootdir=/system/usr/local/ --disable-doc --enable-maintainer-mode && \
+	${BUILD_DIR}/libgpg-error/configure --host arm-linux-androideabi --bindir=/system/bin --includedir=/system/include --libdir=/system/lib  --datarootdir=/system/usr/local --disable-doc --enable-maintainer-mode && \
 	make && \
 	make install
 
@@ -131,7 +131,7 @@ libgcrypt: dummy#libgpg-error
 	export LDFLAGS="--sysroot=${SYSROOT} -fPIE -pie" && \
 	export BUILD_CC=gcc && \
 	${BUILD_DIR}/libgcrypt/autogen.sh && \
-	${BUILD_DIR}/libgcrypt/configure --host arm-linux-androideabi --bindir=/system/bin/ --includedir=/system/include/ --libdir=/system/lib/ --datarootdir=/system/usr/local/ --with-gpg-error-prefix=${DESTDIR}/system/ --disable-doc --enable-maintainer-mode && \
+	${BUILD_DIR}/libgcrypt/configure --host arm-linux-androideabi --bindir=/system/bin --includedir=/system/include --libdir=/system/lib  --datarootdir=/system/usr/local --with-gpg-error-prefix=${DESTDIR}/system/ --disable-doc --enable-maintainer-mode && \
 	make && \
 	make install
 
@@ -154,7 +154,7 @@ libassuan: dummy#libgpg-error
 	export LDFLAGS="--sysroot=${SYSROOT} -fPIE -pie" && \
 	export BUILD_CC=gcc && \
 	${BUILD_DIR}/libassuan/autogen.sh && \
-	${BUILD_DIR}/libassuan/configure --host arm-linux-androideabi --bindir=/system/bin/ --includedir=/system/include/ --libdir=/system/lib/ --datarootdir=/system/usr/local/ --with-gpg-error-prefix=${DESTDIR}/system/ --disable-doc --enable-maintainer-mode && \
+	${BUILD_DIR}/libassuan/configure --host arm-linux-androideabi --bindir=/system/bin --includedir=/system/include --libdir=/system/lib  --datarootdir=/system/usr/local --with-gpg-error-prefix=${DESTDIR}/system/ --disable-doc --enable-maintainer-mode && \
 	make && \
 	make install
 
@@ -177,7 +177,7 @@ libksba: dummy#libgpg-error
 	export LDFLAGS="--sysroot=${SYSROOT} -fPIE -pie" && \
 	export BUILD_CC=gcc && \
 	${BUILD_DIR}/libksba/autogen.sh && \
-	${BUILD_DIR}/libksba/configure --host arm-linux-androideabi --bindir=/system/bin/ --includedir=/system/include/ --libdir=/system/lib/ --datarootdir=/system/usr/local/ --with-gpg-error-prefix=${DESTDIR}/system/ --disable-doc --enable-maintainer-mode && \
+	${BUILD_DIR}/libksba/configure --host arm-linux-androideabi --bindir=/system/bin --includedir=/system/include --libdir=/system/lib  --datarootdir=/system/usr/local --with-gpg-error-prefix=${DESTDIR}/system/ --disable-doc --enable-maintainer-mode && \
 	make && \
 	make install
 
@@ -200,7 +200,7 @@ npth: dummy
 	export LDFLAGS="--sysroot=${SYSROOT} -fPIE -pie" && \
 	export BUILD_CC=gcc && \
 	${BUILD_DIR}/npth/autogen.sh && \
-	${BUILD_DIR}/npth/configure --host arm-linux-androideabi --bindir=/system/bin/ --includedir=/system/include/ --libdir=/system/lib/ --datarootdir=/system/usr/local/ --disable-doc --enable-maintainer-mode && \
+	${BUILD_DIR}/npth/configure --host arm-linux-androideabi --bindir=/system/bin --includedir=/system/include --libdir=/system/lib  --datarootdir=/system/usr/local --disable-doc --enable-maintainer-mode && \
 	make && \
 	make install
 
@@ -223,7 +223,7 @@ ntbtls: dummy
 	export LDFLAGS="--sysroot=${SYSROOT} -fPIE -pie" && \
 	export BUILD_CC=gcc && \
 	${BUILD_DIR}/ntbtls/autogen.sh && \
-	${BUILD_DIR}/ntbtls/configure --host arm-linux-androideabi --bindir=/system/bin/ --includedir=/system/include/ --libdir=/system/lib/ --datarootdir=/system/usr/local/ --with-libgpg-error-prefix=${DESTDIR}/system/ --with-libgcrypt-prefix=${DESTDIR}/system/ --with-ksba-prefix=${DESTDIR}/system/ --disable-doc --enable-maintainer-mode && \
+	${BUILD_DIR}/ntbtls/configure --host arm-linux-androideabi --bindir=/system/bin --includedir=/system/include --libdir=/system/lib  --datarootdir=/system/usr/local --with-libgpg-error-prefix=${DESTDIR}/system/ --with-libgcrypt-prefix=${DESTDIR}/system/ --with-ksba-prefix=${DESTDIR}/system/ --disable-doc --enable-maintainer-mode && \
 	make && \
 	make install
 
@@ -245,9 +245,10 @@ ncurses: dummy
 	export CFLAGS="${DEFAULT_CFLAGS}" && \
 	export LDFLAGS="--sysroot=${SYSROOT} -fPIE -pie" && \
 	export BUILD_CC=gcc && \
-	${BUILD_DIR}/ncurses/configure --host arm-linux-androideabi --bindir=/system/bin/ --includedir=/system/include/ --libdir=/system/lib/ --datarootdir=/system/usr/local/ --disable-doc && \
+	${BUILD_DIR}/ncurses/configure --host arm-linux-androideabi --bindir=/system/bin --includedir=/system/include --libdir=/system/lib  --datarootdir=/system/usr/local --disable-doc && \
 	make || \
-	make install
+	make install || \
+	echo "PLEASE CHECK"
 
 libiconv: dummy
 	wget -c https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.15.tar.gz && \
@@ -270,7 +271,7 @@ libiconv: dummy
 	export CFLAGS="${DEFAULT_CFLAGS}" && \
 	export LDFLAGS="--sysroot=${SYSROOT} -fPIE -pie" && \
 	export BUILD_CC=gcc && \
-	${BUILD_DIR}/libiconv/configure --host arm-linux-androideabi --bindir=/system/bin/ --includedir=/system/include/ --libdir=/system/lib/ --datarootdir=/system/usr/local/ --disable-doc && \
+	${BUILD_DIR}/libiconv/configure --host arm-linux-androideabi --bindir=/system/bin --includedir=/system/include --libdir=/system/lib  --datarootdir=/system/usr/local --disable-doc && \
 	make && \
 	make install
 
@@ -293,7 +294,7 @@ pinentry: dummy
 	export LDFLAGS="--sysroot=${SYSROOT} -fPIE -pie" && \
 	export BUILD_CC=gcc && \
 	${BUILD_DIR}/pinentry/autogen.sh && \
-	${BUILD_DIR}/pinentry/configure --host arm-linux-androideabi --bindir=/system/bin/ --includedir=/system/include/ --libdir=/system/lib/ --datarootdir=/system/usr/local/ --disable-pinentry-qt --enable-pinentry-curses --with-gpg-error-prefix=${DESTDIR}/system/ --with-libassuan-prefix=${DESTDIR}/system/ --enable-ncurses --with-ncurses-include-dir=${DESTDIR}/system/ --with-libiconv-prefix=${DESTDIR}/system/ --disable-doc --enable-maintainer-mode && \
+	${BUILD_DIR}/pinentry/configure --host arm-linux-androideabi --bindir=/system/bin --includedir=/system/include --libdir=/system/lib  --datarootdir=/system/usr/local --disable-pinentry-qt --enable-pinentry-curses --with-gpg-error-prefix=${DESTDIR}/system/ --with-libassuan-prefix=${DESTDIR}/system/ --enable-ncurses --with-ncurses-include-dir=${DESTDIR}/system/ --with-libiconv-prefix=${DESTDIR}/system/ --disable-doc && \
 	echo "all: " > ${BUILD_DIR}/pinentry/doc/Makefile && \
 	echo "all: " > ${BUILD_DIR}/pinentry/doc/Makefile.am && \
 	echo "all: " > ${BUILD_DIR}/pinentry/doc/Makefile.in && \
@@ -319,7 +320,7 @@ gnupg: dummy
 	export LDFLAGS="--sysroot=${SYSROOT} -fPIE -pie" && \
 	export BUILD_CC=gcc && \
 	${BUILD_DIR}/gnupg/autogen.sh && \
-	${BUILD_DIR}/gnupg/configure --host arm-linux-androideabi --prefix="/system" --bindir=/system/bin/ --includedir=/system/include/ --libdir=/system/lib/ --datarootdir=/system/usr/local/ --with-libgpg-error-prefix=${DESTDIR}/system/ --with-libgcrypt-prefix=${DESTDIR}/system/ --with-libassuan-prefix=${DESTDIR}/system/ --with-ksba-prefix=${DESTDIR}/system/ --with-npth-prefix=${DESTDIR}/system/ --enable-ntbtls --with-ntbtls-prefix=${DESTDIR}/system/ --enable-maintainer-mode --disable-doc && \
+	${BUILD_DIR}/gnupg/configure --host arm-linux-androideabi --prefix="/system" --bindir=/system/bin --includedir=/system/include --libdir=/system/lib  --datarootdir=/system/usr/local --with-libgpg-error-prefix=${DESTDIR}/system/ --with-libgcrypt-prefix=${DESTDIR}/system/ --with-libassuan-prefix=${DESTDIR}/system/ --with-ksba-prefix=${DESTDIR}/system/ --with-npth-prefix=${DESTDIR}/system/ --enable-ntbtls --with-ntbtls-prefix=${DESTDIR}/system/ --enable-maintainer-mode --disable-doc && \
 	make && \
 	make install 
 
@@ -345,6 +346,33 @@ binutils-gdb: dummy
 	make && \
 	make install 
 
+openssl: dummy
+	cd ${BUILD_DIR}/openssl/ && \
+	export PATH=${PATH}:${NDK_DIR}/bin:${NDK_DIR}&& \
+	export DESTDIR=${BUILD_DIR}/build && \
+	export MANDIR=$(BUILD_DIR)/system/usr/local/share/man && \
+	export DOCDIR=$(BUILD_DIR)/system/usr/local/share/doc/openssl && \
+	export SYSROOT=${NDK_DIR}/sysroot && \
+	export LDFLAGS="--sysroot=${SYSROOT}" && \
+	export CFLAGS="${CFLAGS}" && \
+	export CXXFLAGS="${CFLAGS}" && \
+	export AR=arm-linux-androideabi-ar && \
+	export LD=arm-linux-androideabi-ld && \
+	export CC=arm-linux-androideabi-gcc && \
+	export NM=arm-linux-androideabi-nm && \
+	export RANLIB=arm-linux-androideabi-ranlib && \
+	export READELF=arm-linux-androideabi-readelf && \
+	export OBJDUMP=arm-linux-androideabi-objdump && \
+	export MACHINE=armv7 && \
+	export ARCH=arm64 && \
+	export CFLAGS="${DEFAULT_CFLAGS}" && \
+	export LDFLAGS="--sysroot=${SYSROOT} -fPIE" && \
+	export BUILD_CC=gcc && \
+	${BUILD_DIR}/openssl/config shared no-ssl2 no-ssl3 no-comp no-hw no-engine --openssldir=${DESTDIR}/system/usr/local/ssl --prefix=${DESTDIR}/system && \
+	make depend && \
+	make && \
+	make install_sw install_ssldirs 
+
 dummy:
 
 android-install: android-env-set android-lxc-install
@@ -354,9 +382,11 @@ android-env-set:
 	adb shell  mount -o rw,remount / && \
 	adb shell  mount -o rw,remount /system && \
 	adb shell mkdir -p /tmp && \
-	adb shell mkdir -p /bin && \
+	adb shell ln -sf /system/bin /bin && \
 	adb shell ln -sf /system/bin/sh /bin/sh && \
-	adb shell ln -sf /system/bin/sh /bin/bash
+	adb shell ln -sf /system/bin/sh /bin/bash && \
+	adb shell "echo 'nameserver 8.8.8.8' >> /etc/resolv.conf" && \
+	adb shell "echo 'nameserver 1.1.1.1' >> /etc/resolv.conf"
 
 android-lxc-install:
 	adb push ${DESTDIR}/* /
