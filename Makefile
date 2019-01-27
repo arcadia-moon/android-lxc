@@ -9,9 +9,9 @@ NDK_DIR := ${BUILD_DIR}/ndk-${API}
 SYSROOT := ${NDK_DIR}/sysroot
 CFLAGS := -D__ANDROID_API__=${API} -DANDROID_PLATFORM=android-${API} -fomit-frame-pointer -DANDROID -pie -fPIE --sysroot=${SYSROOT} -I${SYSROOT}/usr/include -I${SYSROOT}/arm-linux-androideabi
 DEFAULT_CFLAGS := -fomit-frame-pointer -DANDROID -pie -fPIE -fPIC --sysroot=${SYSROOT} -I${SYSROOT}/usr/include -I${DESTDIR}/system/ -isystem ${DESTDIR}/system/include -L${DESTDIR}/system/lib
-all: setNDK setNDKToolchain libcap lxc lxc-templates perl gnupg libgpg-error libgcrypt libassuan libksba libksba npth ntbtls ncurses libiconv pinentry gnupg binutils-gdb
+all: setNDK setNDKToolchain libcap lxc lxc-templates perl libgpg-error libgcrypt libassuan libksba libksba npth ntbtls ncurses libiconv pinentry gnupg binutils-gdb
 
-build: libcap lxc lxc-templates perl gnupg libgpg-error libgcrypt libassuan libksba libksba npth ntbtls ncurses libiconv pinentry gnupg binutils-gdb
+build: libcap lxc lxc-templates perl libgpg-error libgcrypt libassuan libksba libksba npth ntbtls ncurses libiconv pinentry gnupg binutils-gdb
 
 setNDK:
 	wget http://dl.google.com/android/repository/android-ndk-r17b-linux-x86_64.zip -O /tmp/android-ndk-r17b-linux-x86_64.zip
@@ -44,7 +44,7 @@ lxc: dummy
 	export CXXFLAGS="${CFLAGS}" && \
 	export BUILD_CC=gcc && \
 	${BUILD_DIR}/lxc/autogen.sh && \
-	${BUILD_DIR}/lxc/configure --host=arm-linux-androideabi --disable-api-docs --disable-lua --disable-python --disable-examples --datadir=/system/usr/share --with-runtime-path=/cache/ --bindir="/system/bin" --libdir="/system/lib"  --localstatedir="/var" --with-config-path=/data/lxc/containers/ --with-systemdsystemunitdir="/system/lib/systemd" && \
+	${BUILD_DIR}/lxc/configure --host=arm-linux-androideabi --disable-api-docs --disable-lua --disable-python --disable-examples --prefix=/system --datadir=/system/usr/share --with-runtime-path=/cache/ --bindir=/system/bin --libexecdir=/system/bin --sbindir=/system/bin --libdir=/system/lib  --localstatedir=/data/lxc --with-config-path=/data/lxc/containers/ --with-systemdsystemunitdir="/system/lib/systemd" && \
 	make && \
 	make install
 
@@ -60,7 +60,7 @@ lxc-templates: dummy
 	export CXXFLAGS="${CFLAGS}" && \
 	export BUILD_CC=gcc && \
 	${BUILD_DIR}/lxc-templates/autogen.sh && \
-	${BUILD_DIR}/lxc-templates/configure --host=arm-linux-androideabi --disable-api-docs --disable-lua --disable-python --disable-examples --datadir=/system/usr/share --with-runtime-path=/cache/ --bindir="/system/bin" --libdir="/system/lib" --localstatedir="/var" --with-config-path=/data/lxc/containers/ && \
+	${BUILD_DIR}/lxc-templates/configure --host=arm-linux-androideabi --disable-api-docs --disable-lua --disable-python --disable-examples --prefix=/system --datadir=/system/usr/share --with-runtime-path=/cache/ --bindir=/system/bin --libexecdir=/system/bin --sbindir=/system/bin --libdir=/system/lib --localstatedir=/data/lxc --with-config-path=/data/lxc/containers/ && \
 	make && \
 	make install
 
@@ -350,16 +350,16 @@ dummy:
 android-install: android-env-set android-lxc-install
 	
 android-env-set:
-	adb root && \
-	mount -o rw,remount / && \
-	mount -o rw,remount /system && \
-	adb shell mkdir /tmp && \
-	adb shell mkdir /bin && \
-	adb shell ln -s /system/bin/sh /bin/sh && \
-	adb shell ln -s /system/bin/sh /bin/bash
+	adb root || \
+	adb shell  mount -o rw,remount / && \
+	adb shell  mount -o rw,remount /system && \
+	adb shell mkdir -p /tmp && \
+	adb shell mkdir -p /bin && \
+	adb shell ln -sf /system/bin/sh /bin/sh && \
+	adb shell ln -sf /system/bin/sh /bin/bash
 
 android-lxc-install:
-	adb push ./build/* /
+	adb push ${DESTDIR}/* /
 
 clean:
 	cd ${BUILD_DIR}/libcap/libcap && \
