@@ -43,6 +43,3 @@
 [submodule "pinentry"]
 	path = pinentry
 	url = https://dev.gnupg.org/source/pinentry.git
-[submodule "gnupg"]
-	path = gnupg
-	url = https://dev.gnupg.org/source/gnupg.git
