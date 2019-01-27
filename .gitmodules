@@ -25,3 +25,24 @@
 [submodule "libassuan"]
 	path = libassuan
 	url = https://dev.gnupg.org/source/libassuan.git
+[submodule "libgcrypt"]
+	path = libgcrypt
+	url = https://dev.gnupg.org/source/libgcrypt.git
+[submodule "libksba"]
+	path = libksba
+	url = https://dev.gnupg.org/source/libksba.git
+[submodule "npth"]
+	path = npth
+	url = https://dev.gnupg.org/source/npth.git
+[submodule "ntbtls"]
+	path = ntbtls
+	url = https://dev.gnupg.org/source/ntbtls.git
+[submodule "ncurses"]
+	path = ncurses
+	url = https://github.com/mirror/ncurses.git
+[submodule "pinentry"]
+	path = pinentry
+	url = https://dev.gnupg.org/source/pinentry.git
+[submodule "gnupg"]
+	path = gnupg
+	url = https://dev.gnupg.org/source/gnupg.git
