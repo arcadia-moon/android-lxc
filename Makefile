@@ -390,6 +390,19 @@ android-env-set:
 	adb root || \
 	adb shell "mount -o rw,remount /" && \
 	adb shell "mount -o rw,remount /system" && \
+	adb shell "mount -t tmpfs -o rw,size=16M tmpfs /sys/fs/cgroup" && \
+	adb shell "mkdir /sys/fs/cgroup/cpuset " && \
+	adb shell "mkdir /sys/fs/cgroup/cpu " && \
+	adb shell "mkdir /sys/fs/cgroup/cpuacct " && \
+	adb shell "mkdir /sys/fs/cgroup/memory " && \
+	adb shell "mkdir /sys/fs/cgroup/devices " && \
+	adb shell "mkdir /sys/fs/cgroup/freezer" && \
+	adb shell "mount -t cgroup -o defaults,cpuset cgroup /sys/fs/cgroup/cpuset " && \
+	adb shell "mount -t cgroup -o defaults,cpu cgroup /sys/fs/cgroup/cpu " && \
+	adb shell "mount -t cgroup -o defaults,cpuacct cgroup /sys/fs/cgroup/cpuacct " && \
+	adb shell "mount -t cgroup -o defaults,memory cgroup /sys/fs/cgroup/memory " && \
+	adb shell "mount -t cgroup -o defaults,devices cgroup /sys/fs/cgroup/devices " && \
+	adb shell "mount -t cgroup -o defaults,freezer cgroup /sys/fs/cgroup/freezer" && \
 	adb shell "mkdir -p /tmp" && \
 	adb shell "ln -sf /system/bin /bin" && \
 	adb shell "echo 'nameserver 8.8.8.8' >> /etc/resolv.conf" && \
