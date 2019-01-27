@@ -11,7 +11,7 @@ CFLAGS := -D__ANDROID_API__=${API} -DANDROID_PLATFORM=android-${API} -fomit-fram
 DEFAULT_CFLAGS := -fomit-frame-pointer -DANDROID -pie -fPIE -fPIC --sysroot=${SYSROOT} -I${SYSROOT}/usr/include -I${DESTDIR}/system/ -isystem ${DESTDIR}/system/include -L${DESTDIR}/system/lib
 all: setNDK setNDKToolchain libcap lxc lxc-templates perl libgpg-error libgcrypt libassuan libksba libksba npth ntbtls ncurses libiconv pinentry gnupg binutils-gdb
 
-build: libcap lxc lxc-templates perl libgpg-error libgcrypt libassuan libksba libksba npth ntbtls ncurses libiconv pinentry gnupg binutils-gdb
+build: libcap lxc lxc-templates perl libgpg-error libgcrypt libassuan libksba libksba npth ntbtls ncurses libiconv pinentry gnupg binutils-gdb openssl
 
 setNDK:
 	wget http://dl.google.com/android/repository/android-ndk-r17b-linux-x86_64.zip -O /tmp/android-ndk-r17b-linux-x86_64.zip
