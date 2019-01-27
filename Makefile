@@ -247,13 +247,14 @@ ncurses: dummy
 	export BUILD_CC=gcc && \
 	${BUILD_DIR}/ncurses/configure --host arm-linux-androideabi --bindir=/system/bin/ --includedir=/system/include/ --libdir=/system/lib/ --datarootdir=/system/usr/local/ --disable-doc --enable-maintainer-mode && \
 	make || \
-	make install
+	make install || \
+	echo "~"
 
 libiconv: dummy
-	# cd ${BUILD_DIR}/libiconv/ && 
 	wget -c https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.15.tar.gz && \
 	tar -xf ${BUILD_DIR}/libiconv-1.15.tar.gz && \
 	mv libiconv-1.15 libiconv && \
+	cd ${BUILD_DIR}/libiconv/ && \
 	export PATH=${PATH}:${NDK_DIR}/bin:${NDK_DIR}&& \
 	export DESTDIR=${BUILD_DIR}/build && \
 	export SYSROOT=${NDK_DIR}/sysroot && \
@@ -272,7 +273,7 @@ libiconv: dummy
 	export BUILD_CC=gcc && \
 	${BUILD_DIR}/libiconv/configure --host arm-linux-androideabi --bindir=/system/bin/ --includedir=/system/include/ --libdir=/system/lib/ --datarootdir=/system/usr/local/ --disable-doc --enable-maintainer-mode && \
 	make && \
-	make install
+	make DESTDIR=${DESTDIR}/system nstall
 
 pinentry: dummy
 	cd ${BUILD_DIR}/pinentry/ && \
@@ -298,7 +299,7 @@ pinentry: dummy
 	echo "all: " > ${BUILD_DIR}/pinentry/doc/Makefile.am && \
 	echo "all: " > ${BUILD_DIR}/pinentry/doc/Makefile.in && \
 	make && \
-	make install 
+	make install
 
 gnupg: dummy
 	cd ${BUILD_DIR}/gnupg/ && \
@@ -319,7 +320,7 @@ gnupg: dummy
 	export LDFLAGS="--sysroot=${SYSROOT} -fPIE -pie" && \
 	export BUILD_CC=gcc && \
 	${BUILD_DIR}/gnupg/autogen.sh && \
-	${BUILD_DIR}/gnupg/configure --host arm-linux-androideabi --bindir=/system/bin/ --includedir=/system/include/ --libdir=/system/lib/ --datarootdir=/system/usr/local/ --with-libgpg-error-prefix=${DESTDIR}/system/ --with-libgcrypt-prefix=${DESTDIR}/system/ --with-libassuan-prefix=${DESTDIR}/system/ --with-ksba-prefix=${DESTDIR}/system/ --with-npth-prefix=${DESTDIR}/system/ --enable-ntbtls --with-ntbtls-prefix=${DESTDIR}/system/ --enable-maintainer-mode --disable-doc && \
+	${BUILD_DIR}/gnupg/configure --host arm-linux-androideabi --prefix="/system" --bindir=/system/bin/ --includedir=/system/include/ --libdir=/system/lib/ --datarootdir=/system/usr/local/ --with-libgpg-error-prefix=${DESTDIR}/system/ --with-libgcrypt-prefix=${DESTDIR}/system/ --with-libassuan-prefix=${DESTDIR}/system/ --with-ksba-prefix=${DESTDIR}/system/ --with-npth-prefix=${DESTDIR}/system/ --enable-ntbtls --with-ntbtls-prefix=${DESTDIR}/system/ --enable-maintainer-mode --disable-doc && \
 	make && \
 	make install 
 
