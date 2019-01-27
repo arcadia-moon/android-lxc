@@ -379,8 +379,8 @@ android-install: android-env-set android-lxc-install
 	
 android-env-set:
 	adb root || \
-	adb shell  mount -o rw,remount / && \
-	adb shell  mount -o rw,remount /system && \
+	adb shell mount -o rw,remount / && \
+	adb shell mount -o rw,remount /system && \
 	adb shell mkdir -p /tmp && \
 	adb shell ln -sf /system/bin /bin && \
 	adb shell ln -sf /system/bin/sh /bin/sh && \
