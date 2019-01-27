@@ -228,7 +228,7 @@ ntbtls: dummy
 	make install
 
 ncurses: dummy
-	cd ${BUILD_DIR}/ncurses/ && \
+cd ${BUILD_DIR}/ncurses/ && \
 	export PATH=${PATH}:${NDK_DIR}/bin:${NDK_DIR}&& \
 	export DESTDIR=${BUILD_DIR}/build && \
 	export SYSROOT=${NDK_DIR}/sysroot && \
@@ -245,10 +245,9 @@ ncurses: dummy
 	export CFLAGS="${DEFAULT_CFLAGS}" && \
 	export LDFLAGS="--sysroot=${SYSROOT} -fPIE -pie" && \
 	export BUILD_CC=gcc && \
-	${BUILD_DIR}/ncurses/configure --host arm-linux-androideabi --bindir=/system/bin/ --includedir=/system/include/ --libdir=/system/lib/ --datarootdir=/system/usr/local/ --disable-doc --enable-maintainer-mode && \
+	${BUILD_DIR}/ncurses/configure --host arm-linux-androideabi --bindir=/system/bin/ --includedir=/system/include/ --libdir=/system/lib/ --datarootdir=/system/usr/local/ --disable-doc && \
 	make || \
-	make install || \
-	echo "~"
+	make install
 
 libiconv: dummy
 	wget -c https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.15.tar.gz && \
@@ -271,9 +270,9 @@ libiconv: dummy
 	export CFLAGS="${DEFAULT_CFLAGS}" && \
 	export LDFLAGS="--sysroot=${SYSROOT} -fPIE -pie" && \
 	export BUILD_CC=gcc && \
-	${BUILD_DIR}/libiconv/configure --host arm-linux-androideabi --bindir=/system/bin/ --includedir=/system/include/ --libdir=/system/lib/ --datarootdir=/system/usr/local/ --disable-doc --enable-maintainer-mode && \
+	${BUILD_DIR}/libiconv/configure --host arm-linux-androideabi --bindir=/system/bin/ --includedir=/system/include/ --libdir=/system/lib/ --datarootdir=/system/usr/local/ --disable-doc && \
 	make && \
-	make DESTDIR=${DESTDIR}/system nstall
+	make install
 
 pinentry: dummy
 	cd ${BUILD_DIR}/pinentry/ && \
