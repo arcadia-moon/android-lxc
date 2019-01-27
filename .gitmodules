@@ -4,9 +4,6 @@
 [submodule "lxc"]
 	path = lxc
 	url = https://github.com/lxc/lxc
-[submodule "lxc-templates"]
-	path = lxc-templates
-	url = https://github.com/lxc/lxc-templates
 [submodule "debootstrap"]
 	path = debootstrap
 	url = https://salsa.debian.org/installer-team/debootstrap
