@@ -22,9 +22,6 @@
 [submodule "libgpg-error"]
 	path = libgpg-error
 	url = https://dev.gnupg.org/source/libgpg-error.git
-[submodule "libgcrypt"]
-	path = libgcrypt
-	url = https://dev.gnupg.org/source/libgcrypt.git
 [submodule "libassuan"]
 	path = libassuan
 	url = https://dev.gnupg.org/source/libassuan.git
