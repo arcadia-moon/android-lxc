@@ -44,7 +44,7 @@ lxc: dummy
 	export CXXFLAGS="${CFLAGS}" && \
 	export BUILD_CC=gcc && \
 	${BUILD_DIR}/lxc/autogen.sh && \
-	${BUILD_DIR}/lxc/configure --host=arm-linux-androideabi --disable-api-docs --disable-lua --disable-python --disable-examples --prefix=/system --datadir=/system/usr/share --with-runtime-path=/cache/ --bindir=/system/bin --libexecdir=/system/libexec --sbindir=/system/bin --libdir=/system/lib  --localstatedir=/data/lxc --with-config-path=/data/lxc/containers/ --with-systemdsystemunitdir="/system/lib systemd" && \
+	${BUILD_DIR}/lxc/configure --host=arm-linux-androideabi --disable-api-docs --disable-lua --disable-python --disable-examples --prefix=/system --datadir=/system/usr/share --with-runtime-path=/cache/ --bindir=/system/bin --libexecdir=/system/libexec --sbindir=/system/bin --libdir=/system/lib  --localstatedir=/data/lxc --with-config-path=/data/lxc/containers/ --with-systemdsystemunitdir="/system/lib/systemd" && \
 	make && \
 	make install
 
