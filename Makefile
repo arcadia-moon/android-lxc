@@ -11,7 +11,7 @@ CFLAGS := -D__ANDROID_API__=${API} -DANDROID_PLATFORM=android-${API} -fomit-fram
 DEFAULT_CFLAGS := -fomit-frame-pointer -DANDROID -pie -fPIE -fPIC --sysroot=${SYSROOT} -I${SYSROOT}/usr/include -I${DESTDIR}/system/ -isystem ${DESTDIR}/system/include -L${DESTDIR}/system/lib
 all: setNDK setNDKToolchain build
 
-build: debootstrap libcap lxc lxc-templates perl libgpg-error libgcrypt libassuan libksba libksba npth ntbtls ncurses libiconv pinentry gnupg binutils-gdb openssl
+build: debootstrap libcap lxc lxc-templates perl libgpg-error libgcrypt libassuan libksba npth ntbtls ncurses libiconv pinentry gnupg binutils-gdb openssl
 
 setNDK:
 	wget http://dl.google.com/android/repository/android-ndk-r17b-linux-x86_64.zip -O /tmp/android-ndk-r17b-linux-x86_64.zip
@@ -403,4 +403,32 @@ clean:
 	cd ${BUILD_DIR}/libcap/libcap && \
 	make clean && \
 	cd ${BUILD_DIR}/lxc && \
+	make clean && \
+	cd ${BUILD_DIR}/lxc-templates && \
+	make clean && \
+	cd ${BUILD_DIR}/perl && \
+	make clean && \
+	cd ${BUILD_DIR}/libgpg-error && \
+	make clean && \
+	cd ${BUILD_DIR}/libgcrypt && \
+	make clean && \
+	cd ${BUILD_DIR}/libassuan && \
+	make clean && \
+	cd ${BUILD_DIR}/libksba && \
+	make clean && \
+	cd ${BUILD_DIR}/npth && \
+	make clean && \
+	cd ${BUILD_DIR}/ntbtls && \
+	make clean && \
+	cd ${BUILD_DIR}/ncurses && \
+	make clean && \
+	cd ${BUILD_DIR}/libiconv && \
+	make clean && \
+	cd ${BUILD_DIR}/pinentry && \
+	make clean && \
+	cd ${BUILD_DIR}/gnupg && \
+	make clean && \
+	cd ${BUILD_DIR}/binutils-gdb && \
+	make clean && \
+	cd ${BUILD_DIR}/openssl && \
 	make clean
