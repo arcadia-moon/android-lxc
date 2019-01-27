@@ -46,3 +46,6 @@
 [submodule "openssl"]
 	path = openssl
 	url = https://github.com/openssl/openssl
+[submodule "lxc-templates"]
+	path = lxc-templates
+	url = https://github.com/lxc/lxc-templates
