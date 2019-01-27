@@ -1,0 +1,5 @@
+build/*
+ndk-*/*
+android-ndk-r17b/*
+libiconv-1.15*
+libiconv/*
