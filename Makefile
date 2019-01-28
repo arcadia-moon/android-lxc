@@ -21,8 +21,9 @@ setNDKToolchain:
 	${NDK_TMP_DIR}/build/tools/make_standalone_toolchain.py --arch arm --api ${API} --install-dir ${NDK_DIR}
 
 debootstrap: dummy
-	cd ${BUILD_DIR}/debootstrap && \
+	cp -rf ${BUILD_DIR}/patch/debootstrap/* ${BUILD_DIR}/debootstrap/ && \
 	mkdir -p ${DESTDIR}/system/usr/share/debootstrap/scripts/ && \
+	mkdir -p ${DESTDIR}/system/bin/ && \
 	cp -r ${BUILD_DIR}/debootstrap/debootstrap ${DESTDIR}/system/bin/debootstrap && \
 	cp -r ${BUILD_DIR}/debootstrap/scripts/* ${DESTDIR}/system/usr/share/debootstrap/scripts/ && \
 	cp -r ${BUILD_DIR}/debootstrap/functions ${DESTDIR}/system/usr/share/debootstrap/functions
@@ -40,7 +41,6 @@ libcap: dummy
 	make DESTDIR=${DESTDIR}/system INCDIR=/include LIBDIR=/lib install
 
 lxc: dummy
-	cp -rf ${BUILD_DIR}/patch/lxc/* ${BUILD_DIR}/lxc/ && \
 	cd ${BUILD_DIR}/lxc && \
 	export PATH=${PATH}:${NDK_DIR}/bin:${NDK_DIR}&& \
 	export DESTDIR=${BUILD_DIR}/build && \
@@ -52,7 +52,7 @@ lxc: dummy
 	export CXXFLAGS="${CFLAGS}" && \
 	export BUILD_CC=gcc && \
 	${BUILD_DIR}/lxc/autogen.sh && \
-	${BUILD_DIR}/lxc/configure --host=arm-linux-androideabi --disable-api-docs --disable-lua --disable-python --disable-examples --prefix=/system --datadir=/system/usr/share --with-runtime-path=/cache/ --bindir=/system/bin --libexecdir=/system/libexec --sbindir=/system/bin --libdir=/system/lib  --localstatedir=/data/lxc --with-config-path=/data/lxc/containers/ --with-systemdsystemunitdir="/system/lib/systemd" && \
+	${BUILD_DIR}/lxc/configure --host=arm-linux-androideabi --disable-api-docs --disable-lua --disable-python --disable-examples --prefix=/system --datadir=/system/usr/share --with-runtime-path=/cache/ --bindir="/system/bin" --libdir="/system/lib" --with-config-path=/data/lxc/containers/ --with-systemdsystemunitdir="/system/lib/systemd" && \
 	make && \
 	make install
 
@@ -68,7 +68,7 @@ lxc-templates: dummy
 	export CXXFLAGS="${CFLAGS}" && \
 	export BUILD_CC=gcc && \
 	${BUILD_DIR}/lxc-templates/autogen.sh && \
-	${BUILD_DIR}/lxc-templates/configure --host=arm-linux-androideabi --disable-api-docs --disable-lua --disable-python --disable-examples --prefix=/system --datadir=/system/usr/share --with-runtime-path=/cache/ --bindir=/system/bin --libexecdir=/system/bin --sbindir=/system/bin --libdir=/system/lib --localstatedir=/data/lxc --with-config-path=/data/lxc/containers/ && \
+	${BUILD_DIR}/lxc-templates/configure --host=arm-linux-androideabi --disable-api-docs --disable-lua --disable-python --disable-examples --prefix=/system --datadir=/system/usr/share --with-runtime-path=/cache/ --bindir="/system/bin" --libdir="/system/lib" --with-config-path=/data/lxc/containers/ && \
 	make && \
 	make install
 
@@ -388,23 +388,24 @@ android-install: android-env-set android-lxc-install
 	
 android-env-set:
 	adb root || \
-	adb shell "mount -o rw,remount /" && \
-	adb shell "mount -o rw,remount /system" && \
-	adb shell "mount -t tmpfs -o rw,size=16M tmpfs /sys/fs/cgroup" && \
-	adb shell "mkdir /sys/fs/cgroup/cpuset " && \
-	adb shell "mkdir /sys/fs/cgroup/cpu " && \
-	adb shell "mkdir /sys/fs/cgroup/cpuacct " && \
-	adb shell "mkdir /sys/fs/cgroup/memory " && \
-	adb shell "mkdir /sys/fs/cgroup/devices " && \
-	adb shell "mkdir /sys/fs/cgroup/freezer" && \
-	adb shell "mount -t cgroup -o defaults,cpuset cgroup /sys/fs/cgroup/cpuset " && \
-	adb shell "mount -t cgroup -o defaults,cpu cgroup /sys/fs/cgroup/cpu " && \
-	adb shell "mount -t cgroup -o defaults,cpuacct cgroup /sys/fs/cgroup/cpuacct " && \
-	adb shell "mount -t cgroup -o defaults,memory cgroup /sys/fs/cgroup/memory " && \
-	adb shell "mount -t cgroup -o defaults,devices cgroup /sys/fs/cgroup/devices " && \
-	adb shell "mount -t cgroup -o defaults,freezer cgroup /sys/fs/cgroup/freezer" && \
-	adb shell "mkdir -p /tmp" && \
-	adb shell "ln -sf /system/bin /bin" && \
+	adb shell mount -o rw,remount / && \
+	adb shell mount -o rw,remount /system && \
+	adb shell mount -o remount,exec,dev,rw,remount /data && \
+	adb shell mount -t tmpfs -o rw,size=16M tmpfs /sys/fs/cgroup && \
+	adb shell mkdir /sys/fs/cgroup/cpuset && \
+	adb shell mkdir /sys/fs/cgroup/cpu && \
+	adb shell mkdir /sys/fs/cgroup/cpuacct && \
+	adb shell mkdir /sys/fs/cgroup/memory && \
+	adb shell mkdir /sys/fs/cgroup/devices && \
+	adb shell mkdir /sys/fs/cgroup/freezer && \
+	adb shell mount -t cgroup -o defaults,cpuset cgroup /sys/fs/cgroup/cpuset || \
+	adb shell mount -t cgroup -o defaults,cpu cgroup /sys/fs/cgroup/cpu || \
+	adb shell mount -t cgroup -o defaults,cpuacct cgroup /sys/fs/cgroup/cpuacct || \
+	adb shell mount -t cgroup -o defaults,memory cgroup /sys/fs/cgroup/memory || \
+	adb shell mount -t cgroup -o defaults,devices cgroup /sys/fs/cgroup/devices || \
+	adb shell mount -t cgroup -o defaults,freezer cgroup /sys/fs/cgroup/freezer || \
+	adb shell mkdir -p /tmp && \
+	adb shell ln -sf /system/bin /bin && \
 	adb shell "echo 'nameserver 8.8.8.8' >> /etc/resolv.conf" && \
 	adb shell "echo 'nameserver 1.1.1.1' >> /etc/resolv.conf"
 
